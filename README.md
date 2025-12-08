@@ -22,5 +22,3 @@ python -m http.server 8000
 Notes:
 - The page includes a speech button that uses the browser's Web Speech API to read the capital aloud.
 - Data includes US states (plus D.C.), many Indian states/UTs, and the UK constituent countries.
-
-Want me to add more fun facts, more countries, or audio pronunciations in different voices? Reply with what you'd like next.
