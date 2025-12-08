@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Capital Quest — Find the Capital!</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="container">
+    <h1 class="title">Capital Quest</h1>
+    <p class="subtitle">Type a state (or region) and learn its capital — fun for kids!</p>
+
+    <div class="controls">
+      <label for="country">Choose a country:</label>
+      <select id="country" aria-label="Country selector">
+        <option value="us">United States</option>
+        <option value="india">India</option>
+        <option value="uk">United Kingdom</option>
+      </select>
+
+      <label for="stateInput">Enter a state / region:</label>
+      <input id="stateInput" list="suggestions" placeholder="e.g. California, Karnataka, Scotland" aria-label="State input" />
+      <datalist id="suggestions"></datalist>
+
+      <div class="buttons">
+        <button id="findBtn">Find Capital</button>
+        <button id="randomBtn">Surprise Me!</button>
+      </div>
+    </div>
+
+    <section id="result" class="result" aria-live="polite">
+      <div class="card hidden">
+        <div class="flag" id="flag">🌍</div>
+        <div class="info">
+          <h2 id="stateName">State / Region</h2>
+          <p class="capital">Capital: <strong id="capitalName">—</strong></p>
+          <p class="fact" id="funFact">Try searching a state to see a fun fact!</p>
+          <div class="actions">
+            <button id="speakBtn">🔊 Say It</button>
+            <button id="againBtn">Try Another</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <small>Designed for curious kids — includes US, India, and UK data.</small>
+    </footer>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
