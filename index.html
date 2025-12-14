@@ -9,7 +9,7 @@
 <body>
   <main class="container">
     <h1 class="title">Capital Quest</h1>
-    <p class="subtitle">Type a state (or region) and learn its capital — fun for kids!</p>
+    <p class="subtitle">Select a state and learn its capital</p>
 
     <div class="controls">
       <label for="country">Choose a country:</label>
@@ -49,6 +49,9 @@
     </footer>
   </main>
 
+  <!-- Set API_BASE so the client knows where to request enriched facts.
+       Change to your API host/port if you are running the server elsewhere. -->
+  <script>window.API_BASE = 'http://localhost:5000';</script>
   <script src="script.js"></script>
 </body>
 </html>

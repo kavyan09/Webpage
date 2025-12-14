@@ -28,13 +28,17 @@ const funFacts = {
   "Sacramento":"Sacramento started as a Gold Rush town and has a historic riverfront.",
   "New Delhi":"New Delhi is home to India Gate and the grand Rashtrapati Bhavan.",
   "London":"London has the famous River Thames and a long history back to Roman times.",
-  "Bengaluru":"Bengaluru is known as India’s tech hub — " + "" + "Silicon Valley of India.",
+  "Bengaluru":"Bengaluru is known as India’s tech hub — Silicon Valley of India.",
   "Albany":"Albany is one of the oldest surviving settlements of the original British thirteen colonies.",
   "Edinburgh":"Edinburgh has a castle on a volcanic rock — great for imagining knights!",
   "Austin":"Austin is famous for music and live concerts — 'Keep Austin Weird' is its motto.",
   "Chennai":"Chennai has beautiful temples and a long coastline on the Bay of Bengal.",
   "Mumbai":"Mumbai is India's largest city and home to Bollywood films.",
 }
+
+// API base (defaults to local Flask server). You can override by setting
+// `window.API_BASE` before loading this script (useful in production).
+const API_BASE = window.API_BASE || 'http://localhost:5000';
 
 // UI elements
 const countrySelect = document.getElementById('country');
@@ -99,9 +103,30 @@ function showResult(item, countryKey){
   }
   stateNameEl.textContent = item.state;
   capitalNameEl.textContent = item.capital;
-  funFactEl.textContent = funFacts[item.capital] || `Fun fact: ${item.state} is interesting — explore more!`;
   flagEl.textContent = countryToEmoji(countryKey);
+  
+  // fetch enriched fact from API (or local fallback)
+  fetchEnrichedFact(item.capital);
   card.classList.remove('hidden');
+}
+
+function fetchEnrichedFact(capitalName){
+  // try to fetch from API; fallback to local facts
+  const apiUrl = `${API_BASE}/api/enriched?capital=${encodeURIComponent(capitalName)}`;
+  
+  fetch(apiUrl)
+    .then(res => res.json())
+    .then(data => {
+      funFactEl.innerHTML = data.fact || 'Interesting place to explore!';
+      // append Wikipedia summary if available
+      if(data.wikipedia_summary){
+        funFactEl.innerHTML += `<br><br><strong>More info:</strong> ${data.wikipedia_summary}`;
+      }
+    })
+    .catch(err => {
+      // fallback to local facts if API unavailable
+      funFactEl.textContent = funFacts[capitalName] || `Fun fact: ${capitalName} is interesting — explore more!`;
+    });
 }
 
 findBtn.addEventListener('click',()=>{
